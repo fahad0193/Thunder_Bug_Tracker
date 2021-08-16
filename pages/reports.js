@@ -11,8 +11,6 @@ const Home = () =>{
     username: '',
     category: '',
   });
-  
-  const [projects, setProjects] = useState([]);
   const [reports, setReports] = useState([]);
   const [showData, setShowData] = useState('p');
 
@@ -34,20 +32,6 @@ const Home = () =>{
       }
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
-
-  useEffect(()=>{
-    const projectsList = [];
-    firebase.firestore()
-    .collection('projects')
-    .get()
-    .then(snapshot => snapshot.forEach(doc=> {
-          let data = doc.data();
-          projectsList.push(data);
-        }  
-      ));
-    setProjects(projectsList);
   }, []);
 
 
@@ -81,7 +65,7 @@ const Home = () =>{
         <button className={`${styles._btn} ${styles._log_out}`} onClick={handleSignOut} >Log Out</button>
       </div>
       <div className={styles.nav}>
-          <Link href="/">
+            <Link href="/">
             <a >
               <button className={`${styles._btn} ${styles._completed_project_btn} me-3`}>
                   Project
@@ -91,18 +75,16 @@ const Home = () =>{
 
           <Link href="/reports">
             <a >
-            <button className={`${styles._btn} ${styles._Reported_project_btn} me-auto`}>
+            <button className={`${styles._btn} ${styles._Reported_project_btn} me-3`}>
             Report
           </button>
             </a>
           </Link>
 
-          
-
           {
             user.category === "Adminsitator" && 
-              <Link href="/add_project">
-                <a className={`${styles.add_project} ms-auto`}> <IoAddOutline /> New Project </a>
+              <Link href="/add_report">
+                <a className={`${styles.add_project} ms-auto`}> <IoAddOutline /> New Report </a>
               </Link>
           }
 
@@ -121,23 +103,21 @@ const Home = () =>{
           <tr>
             <th style={{width: '200px'}}>#</th>
             <th style={{width: '200px'}}>Project Name</th>
-            <th style={{width: '120px'}}>Managed by</th>
-            <th style={{width: '120px'}}>Developer</th>
+            <th style={{width: '120px'}}>Reported by</th>
+            <th style={{width: '280px'}}>Bug Status</th>
             <th style={{width: '280px'}}>Discription</th>
-            <th style={{width: '120px'}}>End Date</th>
           </tr>
         </thead>
 
         <tbody>
           {
-            projects.map((el, idx)=>(
+            reports.map((el, idx)=>(
               <tr key={idx}>
                 <td style={{fontWeight: 600, fontSize: '13px'}}>{el.userId}</td>
                 <td>{el.project_name}</td>
-                <td>{el.project_manager}</td>
-                <td>{el.developer_name}</td>
+                <td>{el.reported_by}</td>
+                <td>{el.bug_status}</td>
                 <td>{el.discription}</td>
-                <td>{el.ending_date}</td>
               </tr>
             ))
           }

@@ -14,3 +14,25 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.project_body{
+  width: 1080px;
+  box-shadow: 0 0 6px rgb(0 0 0 / 10%);
+  padding: 0 30px;
+}
+
+table{
+  margin: 20px 0;
+}
+
+tr{
+  border-bottom: 1px solid rgba(167, 167, 167, 0.2);
+}
+th,td{
+  padding: 8px 10px;
+}
+
+thead tr{
+  background: #02a45c;
+  color: #fff;
+}
